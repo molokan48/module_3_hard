@@ -1,34 +1,34 @@
 def calkulate_structure_sum(args):
-    global summa
+    result = int(0)
+    def calkulate_structure(args):
+        nonlocal result
+        if isinstance(args,int):
+            result = result + int(args)
+            return
+        if isinstance(args,str):
+            result = result + len(args)
+            return
+        if isinstance(args,list):
+            for i in args:
+                calkulate_structure(i)
+        if isinstance(args,dict):
+            for key in args.keys():
+                calkulate_structure(key)
+            for values in args.values():
+                calkulate_structure(values)
+        if isinstance(args, tuple):
+            for i in args:
+                calkulate_structure(i)
+        if isinstance(args,set):
+            i = list(args)
+            calkulate_structure(i)
+        return result
+    return calkulate_structure(args)
 
-    if isinstance(args,int):
-        summa = summa + int(args)
-        return
-
-    if isinstance(args,str):
-        summa = summa + len(args)
-        return
-
-    if isinstance(args,list):
-        for i in range(len(args)):
-            calkulate_structure_sum(args[i])
-
-    if isinstance(args,dict):
-        for key in args.keys():
-            summa = summa + len(key)
-        for values in args.values():
-            summa = summa + int(values)
-
-    if isinstance(args, tuple):
-        for i in range(len(args)):
-            calkulate_structure_sum(args[i])
-    if isinstance(args,set):
-        args = list(args)
-        calkulate_structure_sum(args)
-    return summa
 
 data_structure = [
     [1, 2, 3],{'a': 4, 'b': 5},(6, {'cube': 7, 'drum': 8}),"Hello",((), [{(2, 'Urban', ('Urban2', 35))}])
                 ]
-summa = int(0)
-print(calkulate_structure_sum(data_structure))
+
+result = calkulate_structure_sum(data_structure)
+print(result)
